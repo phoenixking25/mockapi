@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+    <head>
+        <title>MockApi 1.0</title>
+        <link href="{{ url_for('static', filename='materialize.min.css') }}" rel="stylesheet" media="screen">
+        <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" media="screen">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <div class="row">
+            <div class="col s12">
+                <div class="row">
+                    <div class="col l6 offset-l3 s12">
+                        <div class="card-panel">
+                            <h4 align="center" class="Thin">Mock Api</h4>
+                            <div class="row">
+                                <form class="col s12" method=post action="">
+                                    <div class="row">
+                                        <div class="input-field col s12">
+                                        <input id="name" type="text" class="validate" name="name" required>
+                                        <label for="name">API NAME</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                            <div class="input-field col s12">
+                                            <input id="field" type="text" class="validate" name="field1" required>
+                                            <label for="field">Field 1</label>
+                                            </div>
+                                        </div>
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <label for="number">SELECT THE NUMBER OF RECORDS</label>
+                                            <p class="range-field">
+                                                <input type="range" id="number" name="number" min="0" max="100" value="10"/>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button class="btn waves-effect waves-light" type="submit" name="action">Start API
+                                        <i class="material-icons right">send</i>
+                                    </button>
+                                    {% if api_running %}
+                                    <div class="row">
+                                        <div class="col s12">
+                                            <div class="card-panel grey lighten-4 " style="margin-top:10%">
+                                                <div class="row">
+                                                    <div class="col s12">
+                                                        <h5>Api is running on:</h5>
+                                                        <div class="row">
+                                                            GET REQUEST: <a href="/get">/get</a><br>
+                                                            POST REQUEST: /post<br>
+                                                            PUT REQUEST: /put<br>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='materialize.min.js') }}"></script>
+    </body>
+</html>

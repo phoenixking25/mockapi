@@ -3,24 +3,23 @@ import json
 
 app = Flask(__name__)
 
-name = field1 = ''
+fields = []
 data = []
-endpoint = ''
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     api_running = False
     if request.method == 'POST':
-        global name
-        global field1
-        global endpoint
-        name = request.form['name']
-        field1= request.form['field1']
+        print len(request.form)
+        print request.form["field" + str(0+1)]
+        for i in xrange(len(request.form) - 2):
+            fields.append(str(request.form["field" + str(i+1)]))
         number = request.form['number']
         make_data(int(number))
-        endpoint = name
-        return render_template('form.html', api_running=True, api_name=name)
+        return render_template('form.html', api_running=True)
     return render_template('form.html')
+
+
 
 
 @app.route('/get', methods=['GET'])
@@ -35,6 +34,12 @@ def post_request():
         data.append(obj)
         return 'success', 200
 
+@app.route('/get/<id>', methods=['GET'])
+def get_item(id):
+    global data
+    print len(data)
+    return json.dumps(data[int(id) - 1]), 200
+
 @app.route('/delete/<id>', methods=['DELETE'])
 def del_request(id):
     if request.method == 'DELETE':
@@ -42,20 +47,19 @@ def del_request(id):
         del data[int(id) - 1]
         return 'success', 200
 
-# @app.route('/put/<id>', methods=['PUT'])
-# def put_request(id):
-#     if request.method == 'PUT':
-#         global data
-#         print request.form
-#         return request.form['js']
-
 
 def make_data(number):
     global data
+    global fields
     data = []
+    obj = {}
     for i in xrange(number):
-        obj = dict(id = i + 1, field1=str(field1) + " " + str(i+1))
+        obj['id'] = i + 1
+        print obj['id']
+        for j in fields:
+            obj[j] = j + " " + str(i + 1)
         data.append(obj)
+        obj = {}
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True, debug=True)

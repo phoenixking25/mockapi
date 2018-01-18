@@ -9,18 +9,19 @@ data = []
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    api_running = False
+    api_running = False # assuming first api is not running
     if request.method == 'POST':
-        for i in xrange((len(request.form) - 2)/2):
+        for i in xrange((len(request.form) - 2)/2): #getting no of fields and running for loop on that
             fields.append(dict(field_name = str(request.form["field" + str(i+1)]), datatype = int(request.form["datatype" + str(i+1)])))
-        number = request.form['number']
-        make_data(int(number))
-        return render_template('form.html', api_running=True)
+            print fields #getting fields and respective datatype in a array
+        number = request.form['number'] # getting no of records to be wanted
+        make_data(int(number)) #calling function
+        return render_template('form.html', api_running=True) #rendering data in html page
     return render_template('form.html')
 
 @app.route('/get', methods=['GET'])
 def get_request():
-    return json.dumps(data), 200
+    return json.dumps(data), 200 # returning json data
 
 # @app.route('/post', methods=['POST'])
 # def post_request():
